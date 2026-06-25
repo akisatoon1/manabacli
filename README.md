@@ -6,19 +6,26 @@
 ## 使い方
 
 ```
-manaba <ファイル名> <URL>
+manaba <URL> <ファイル名>...
 ```
 
-- `<ファイル名>`: manaba にアップロードするローカルファイルのパス
 - `<URL>`: 提出先の manaba レポート提出ページ URL
+- `<ファイル名>`: manaba にアップロードするローカルファイルのパス（スペース区切りで複数指定できます）
 
 例:
 
 ```
-manaba report.pdf https://manaba.example.ac.jp/ct/course_xxxx_report_yyyy
+manaba https://manaba.example.ac.jp/ct/course_xxxx_report_yyyy report.pdf
 ```
 
-成功すると `アップロードに成功しました: report.pdf` と表示されます。
+複数ファイルをまとめてアップロードする例:
+
+```
+manaba https://manaba.example.ac.jp/ct/course_xxxx_report_yyyy report.pdf appendix.png slides.pptx
+```
+
+成功すると、アップロードしたファイルごとに `アップロードに成功しました: report.pdf` と表示されます。
+（指定したファイルは先にすべて存在確認され、1つでも見つからなければアップロードを開始せず終了します。）
 （このツールはアップロードのみを行い、提出は実行しません。）
 
 ## 認証情報の設定
