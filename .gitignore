@@ -1,1 +1,6 @@
+# build
 dist/*
+
+# claude code
+CLAUDE.md
+.claude/*
