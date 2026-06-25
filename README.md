@@ -6,7 +6,7 @@
 ## 使い方
 
 ```
-manaba <URL> <ファイル名>...
+manabacli <URL> <ファイル名>...
 ```
 
 - `<URL>`: 提出先の manaba レポート提出ページ URL
@@ -15,13 +15,13 @@ manaba <URL> <ファイル名>...
 例:
 
 ```
-manaba https://manaba.example.ac.jp/ct/course_xxxx_report_yyyy report.pdf
+manabacli https://manaba.example.ac.jp/ct/course_xxxx_report_yyyy report.pdf
 ```
 
 複数ファイルをまとめてアップロードする例:
 
 ```
-manaba https://manaba.example.ac.jp/ct/course_xxxx_report_yyyy report.pdf appendix.png slides.pptx
+manabacli https://manaba.example.ac.jp/ct/course_xxxx_report_yyyy report.pdf appendix.png slides.pptx
 ```
 
 成功すると、アップロードしたファイルごとに `アップロードに成功しました: report.pdf` と表示されます。
@@ -54,16 +54,16 @@ Go をインストールできない・管理者権限（sudo）が使えない�
 ダウンロードして PATH を通すだけで利用できます。
 
 1. **バイナリをダウンロードする。** ホームディレクトリ配下の `~/.local/bin`（無ければ作成）に
-   最新リリースの `manaba` を保存します。
+   最新リリースの `manabacli` を保存します。
 
    ```
    mkdir -p ~/.local/bin
-   curl -L -o ~/.local/bin/manaba https://github.com/akisatoon1/manabacli/releases/latest/download/manaba
-   chmod +x ~/.local/bin/manaba
+   curl -L -o ~/.local/bin/manabacli https://github.com/akisatoon1/manabacli/releases/latest/download/manabacli
+   chmod +x ~/.local/bin/manabacli
    ```
 
    `curl` が使えない場合は、ブラウザで [Releases](https://github.com/akisatoon1/manabacli/releases)
-   を開き、最新リリースの `manaba` を `~/.local/bin/` に保存して `chmod +x ~/.local/bin/manaba` を実行してください。
+   を開き、最新リリースの `manabacli` を `~/.local/bin/` に保存して `chmod +x ~/.local/bin/manabacli` を実行してください。
 
 2. **`~/.local/bin` に PATH を通す。** シェルの設定ファイル（bash なら `~/.bashrc`、zsh なら `~/.zshrc`）に
    次の1行を追記します。管理者権限は不要です。
@@ -78,30 +78,30 @@ Go をインストールできない・管理者権限（sudo）が使えない�
    source ~/.bashrc
    ```
 
-3. **確認する。** どこからでも `manaba` コマンドが実行できれば成功です。
+3. **確認する。** どこからでも `manabacli` コマンドが実行できれば成功です。
 
    ```
-   manaba
+   manabacli
    ```
 
    Usage が表示されればインストール完了です。あとは「[認証情報の設定](#認証情報の設定)」を済ませれば使えます。
 
-> ダウンロードしたバイナリは Linux 向けです。後でアップデートするときは、同じ手順で `~/.local/bin/manaba` を上書きしてください。
+> ダウンロードしたバイナリは Linux 向けです。後でアップデートするときは、同じ手順で `~/.local/bin/manabacli` を上書きしてください。
 
 ## ビルド
 
 Go 1.22 以上が必要です。
 
 ```
-go build -o manaba .
+go build -o manabacli .
 ```
 
-生成された `manaba` バイナリを PATH の通った場所に置くと、どこからでも実行できます。
+生成された `manabacli` バイナリを PATH の通った場所に置くと、どこからでも実行できます。
 
 ```
-go install .          # $GOBIN もしくは ~/go/bin にインストール
+go install .          # $GOBIN もしくは ~/go/bin に manabacli としてインストール
 # または
-sudo cp manaba /usr/local/bin/
+sudo cp manabacli /usr/local/bin/
 ```
 
 ## エラーと終了コード

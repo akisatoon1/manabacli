@@ -1,9 +1,9 @@
-// Command manaba は、自作ライブラリ github.com/akisatoon1/manaba を使って
+// Command manabacli は、自作ライブラリ github.com/akisatoon1/manaba を使って
 // manaba にファイルをアップロードする CLI です。
 //
 // 使い方:
 //
-//	manaba <URL> <ファイル名>...
+//	manabacli <URL> <ファイル名>...
 //
 // 認証情報は ~/.manabacli/config から読み込みます。
 package main
@@ -23,7 +23,7 @@ const configRelPath = ".manabacli/config"
 
 // usage は引数を誤ったときに表示する使い方の説明を返します。
 func usage() string {
-	return `使い方: manaba <URL> <ファイル名>...
+	return `使い方: manabacli <URL> <ファイル名>...
 
   <URL>         提出先の manaba ページ URL
   <ファイル名>  manaba にアップロードするファイルのパス（複数指定可）
