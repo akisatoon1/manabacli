@@ -40,6 +40,47 @@ password=あなたのパスワード
 - `#` で始まる行と空行は無視されます。
 - パスワードは平文で保存されるため、`chmod 600` でファイル権限を制限することを推奨します。
 
+## 学校の PC にインストールする方法
+
+Go をインストールできない・管理者権限（sudo）が使えない学校の PC でも、
+[Releases](https://github.com/akisatoon1/manabacli/releases) に置いてあるビルド済みバイナリを
+ダウンロードして PATH を通すだけで利用できます。
+
+1. **バイナリをダウンロードする。** ホームディレクトリ配下の `~/.local/bin`（無ければ作成）に
+   最新リリースの `manaba` を保存します。
+
+   ```
+   mkdir -p ~/.local/bin
+   curl -L -o ~/.local/bin/manaba https://github.com/akisatoon1/manabacli/releases/latest/download/manaba
+   chmod +x ~/.local/bin/manaba
+   ```
+
+   `curl` が使えない場合は、ブラウザで [Releases](https://github.com/akisatoon1/manabacli/releases)
+   を開き、最新リリースの `manaba` を `~/.local/bin/` に保存して `chmod +x ~/.local/bin/manaba` を実行してください。
+
+2. **`~/.local/bin` に PATH を通す。** シェルの設定ファイル（bash なら `~/.bashrc`、zsh なら `~/.zshrc`）に
+   次の1行を追記します。管理者権限は不要です。
+
+   ```
+   echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
+   ```
+
+   追記したら設定を再読み込みします（または端末を開き直します）。
+
+   ```
+   source ~/.bashrc
+   ```
+
+3. **確認する。** どこからでも `manaba` コマンドが実行できれば成功です。
+
+   ```
+   manaba
+   ```
+
+   Usage が表示されればインストール完了です。あとは「[認証情報の設定](#認証情報の設定)」を済ませれば使えます。
+
+> ダウンロードしたバイナリは Linux 向けです。後でアップデートするときは、同じ手順で `~/.local/bin/manaba` を上書きしてください。
+
 ## ビルド
 
 Go 1.22 以上が必要です。
