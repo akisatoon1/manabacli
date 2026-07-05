@@ -19,7 +19,7 @@ import (
 )
 
 // 設定ファイルを読み込んで, usernameとpasswordを取得するため.
-func LoadConfig(path string) (username, password string, err error) {
+func Load(path string) (username, password string, err error) {
 	f, err := os.Open(path)
 	if err != nil {
 		if os.IsNotExist(err) {

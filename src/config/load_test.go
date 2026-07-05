@@ -43,7 +43,7 @@ func runTc(t *testing.T, tc testcase) {
 	}
 
 	// act
-	username, passwd, err := config.LoadConfig(path)
+	username, passwd, err := config.Load(path)
 
 	// assert
 	require.NoError(t, err)
