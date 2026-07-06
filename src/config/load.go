@@ -15,11 +15,22 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"path/filepath"
 	"strings"
 )
 
 // 設定ファイルを読み込んで, usernameとpasswordを取得するため.
-func Load(path string) (username, password string, err error) {
+func Load() (username, password string, err error) {
+	path, err := getPath()
+	if err != nil {
+		return "", "", fmt.Errorf("設定ファイルのパスを取得できません: %w", err)
+	}
+	return loadFromPath(path)
+}
+
+// ユーザのためにAPIとしてはLoad()を公開したかったが, getPathの中にホームディレクトリを取得する処理があり,
+// テストが難しいと感じたため, loadFromPathを切り出した.
+func loadFromPath(path string) (username, password string, err error) {
 	f, err := os.Open(path)
 	if err != nil {
 		if os.IsNotExist(err) {
@@ -72,4 +83,14 @@ func Load(path string) (username, password string, err error) {
 			path, strings.Join(missing, " と "))
 	}
 	return username, password, nil
+}
+
+// 設定ファイル ~/.manabacli/config の絶対パスを返す.
+// パスに~が含まれる不安定さを解消するため.
+func getPath() (string, error) {
+	home, err := os.UserHomeDir()
+	if err != nil {
+		return "", fmt.Errorf("ホームディレクトリを取得できません: %w", err)
+	}
+	return filepath.Join(home, ".manabacli/config"), nil
 }

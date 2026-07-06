@@ -44,15 +44,7 @@ func main() {
 	url := args[0]
 	filePaths := args[1:]
 
-	// 設定ファイルの読み込み
-	cfgPath, err := config.GetPath()
-	if err != nil {
-		fatal(1, "%v", err)
-	}
-	username, password, err := config.Load(cfgPath)
-	if err != nil {
-		fatal(1, "%v", err)
-	}
+	username, password, err := config.Load()
 
 	// アップロード対象ファイルの存在確認（途中失敗を避けるため、全ファイルを先に検証する）
 	for _, filePath := range filePaths {
