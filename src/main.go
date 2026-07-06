@@ -45,7 +45,14 @@ func main() {
 	filePaths := args[1:]
 
 	username, password, err := config.Load()
+	if err != nil {
+		fatal(1, "設定の読み込みに失敗しました: %v", err)
+	}
 
+	uploadFiles(nil, username, password, url, filePaths)
+}
+
+func uploadFiles(jar *cookiejar.Jar, username, password, url string, filePaths []string) error {
 	// アップロード対象ファイルの存在確認（途中失敗を避けるため、全ファイルを先に検証する）
 	for _, filePath := range filePaths {
 		info, err := os.Stat(filePath)
@@ -76,4 +83,5 @@ func main() {
 		}
 		fmt.Printf("アップロードに成功しました: %s\n", filePath)
 	}
+	return nil
 }
