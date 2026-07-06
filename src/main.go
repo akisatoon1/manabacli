@@ -13,12 +13,9 @@ import (
 	"manabacli/src/config"
 	"net/http/cookiejar"
 	"os"
-	"path/filepath"
 
 	"github.com/akisatoon1/manaba"
 )
-
-const configRelPath = ".manabacli/config"
 
 // usage は引数を誤ったときに表示する使い方の説明を返します。
 func usage() string {
@@ -38,15 +35,6 @@ func fatal(code int, format string, args ...any) {
 	os.Exit(code)
 }
 
-// configPath は設定ファイル ~/.manabacli/config の絶対パスを返します。
-func configPath() (string, error) {
-	home, err := os.UserHomeDir()
-	if err != nil {
-		return "", fmt.Errorf("ホームディレクトリを取得できません: %w", err)
-	}
-	return filepath.Join(home, configRelPath), nil
-}
-
 func main() {
 	args := os.Args[1:]
 	if len(args) < 2 {
@@ -56,15 +44,7 @@ func main() {
 	url := args[0]
 	filePaths := args[1:]
 
-	// 設定ファイルの読み込み
-	cfgPath, err := configPath()
-	if err != nil {
-		fatal(1, "%v", err)
-	}
-	username, password, err := config.LoadConfig(cfgPath)
-	if err != nil {
-		fatal(1, "%v", err)
-	}
+	username, password, err := config.Load()
 
 	// アップロード対象ファイルの存在確認（途中失敗を避けるため、全ファイルを先に検証する）
 	for _, filePath := range filePaths {
