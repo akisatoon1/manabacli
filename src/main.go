@@ -11,10 +11,8 @@ package main
 import (
 	"fmt"
 	"manabacli/src/config"
-	"net/http/cookiejar"
+	"manabacli/src/manabaclient"
 	"os"
-
-	"github.com/akisatoon1/manaba"
 )
 
 // usage は引数を誤ったときに表示する使い方の説明を返します。
@@ -49,39 +47,7 @@ func main() {
 		fatal(1, "設定の読み込みに失敗しました: %v", err)
 	}
 
-	uploadFiles(nil, username, password, url, filePaths)
-}
-
-func uploadFiles(jar *cookiejar.Jar, username, password, url string, filePaths []string) error {
-	// アップロード対象ファイルの存在確認（途中失敗を避けるため、全ファイルを先に検証する）
-	for _, filePath := range filePaths {
-		info, err := os.Stat(filePath)
-		if err != nil {
-			if os.IsNotExist(err) {
-				fatal(1, "ファイルが見つかりません: %s", filePath)
-			}
-			fatal(1, "ファイルを確認できません: %v", err)
-		}
-		if info.IsDir() {
-			fatal(1, "%s はディレクトリです。ファイルを指定してください", filePath)
-		}
+	if err := uploadFiles(manabaclient.Client{}, username, password, url, filePaths); err != nil {
+		fatal(1, "ファイルアップロードに失敗しました: %v", err)
 	}
-
-	// Cookie ジャーを用意してログイン
-	jar, err := cookiejar.New(nil)
-	if err != nil {
-		fatal(1, "Cookie ジャーの作成に失敗しました: %v", err)
-	}
-	if err := manaba.Login(jar, username, password); err != nil {
-		fatal(1, "ログインに失敗しました: %v", err)
-	}
-
-	// ファイルを順番にアップロード
-	for _, filePath := range filePaths {
-		if err := manaba.UploadFile(jar, url, filePath); err != nil {
-			fatal(1, "アップロードに失敗しました (%s): %v", filePath, err)
-		}
-		fmt.Printf("アップロードに成功しました: %s\n", filePath)
-	}
-	return nil
 }
