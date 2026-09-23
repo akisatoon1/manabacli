@@ -5,8 +5,17 @@
 
 ## 使い方
 
+`manabacli` はサブコマンド形式です。以下のコマンドが利用できます。
+
+| コマンド | 説明 |
+| --- | --- |
+| `upload` | ファイルを manaba のレポート提出ページにアップロードします |
+| `getreport` | コースのレポートページから、レポート名と提出先 URL の一覧を取得します |
+
+### upload — ファイルをアップロードする
+
 ```
-manabacli <URL> <ファイル名>...
+manabacli upload <URL> <ファイル名>...
 ```
 
 - `<URL>`: 提出先の manaba レポート提出ページ URL
@@ -15,18 +24,36 @@ manabacli <URL> <ファイル名>...
 例:
 
 ```
-manabacli https://manaba.example.ac.jp/ct/course_xxxx_report_yyyy report.pdf
+manabacli upload https://manaba.example.ac.jp/ct/course_xxxx_report_yyyy report.pdf
 ```
 
 複数ファイルをまとめてアップロードする例:
 
 ```
-manabacli https://manaba.example.ac.jp/ct/course_xxxx_report_yyyy report.pdf appendix.png slides.pptx
+manabacli upload https://manaba.example.ac.jp/ct/course_xxxx_report_yyyy report.pdf appendix.png slides.pptx
 ```
 
 成功すると、アップロードしたファイルごとに `アップロードに成功しました: report.pdf` と表示されます。
 （指定したファイルは先にすべて存在確認され、1つでも見つからなければアップロードを開始せず終了します。）
 （このツールはアップロードのみを行い、提出は実行しません。）
+
+### getreport — レポート一覧を取得する
+
+提出先のレポート提出ページ URL が分からないときに使います。コースのレポートページ URL を渡すと、
+レポート名と提出先 URL の一覧を `レポート名 -> URL` の形式で出力します。ここで得た URL を
+`upload` コマンドに渡してファイルをアップロードできます。
+
+```
+manabacli getreport <URL>
+```
+
+- `<URL>`: コースのレポートページ URL
+
+例:
+
+```
+manabacli getreport https://manaba.example.ac.jp/ct/course_xxxx_report
+```
 
 ## 認証情報の設定
 
