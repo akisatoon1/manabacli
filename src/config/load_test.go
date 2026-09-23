@@ -1,7 +1,6 @@
-package config_test
+package config
 
 import (
-	"manabacli/src/config"
 	"os"
 	"path/filepath"
 	"testing"
@@ -17,7 +16,7 @@ type testcase struct {
 	expectedPassword string
 }
 
-func TestLoadConfig(t *testing.T) {
+func TestLoadFromPath(t *testing.T) {
 	tests := []testcase{
 		{
 			name:             "successful",
@@ -43,7 +42,7 @@ func runTc(t *testing.T, tc testcase) {
 	}
 
 	// act
-	username, passwd, err := config.LoadConfig(path)
+	username, passwd, err := loadFromPath(path)
 
 	// assert
 	require.NoError(t, err)
