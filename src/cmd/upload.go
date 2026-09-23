@@ -1,10 +1,38 @@
-package main
+package cmd
 
 import (
 	"fmt"
+	"manabacli/src/config"
+	"manabacli/src/manabaclient"
 	"net/http/cookiejar"
 	"os"
+
+	"github.com/spf13/cobra"
 )
+
+var uploadCmd = &cobra.Command{
+	Use:   "upload <URL> <ファイル名>...",
+	Short: "ファイルを manaba にアップロードします",
+	Args:  cobra.MinimumNArgs(2),
+	RunE: func(cmd *cobra.Command, args []string) error {
+		url := args[0]
+		filePaths := args[1:]
+
+		username, password, err := config.Load()
+		if err != nil {
+			return err
+		}
+
+		if err := uploadFiles(manabaclient.Client{}, username, password, url, filePaths); err != nil {
+			return err
+		}
+		return nil
+	},
+}
+
+func init() {
+	rootCmd.AddCommand(uploadCmd)
+}
 
 type manaba interface {
 	Login(jar *cookiejar.Jar, username string, password string) error
@@ -16,7 +44,7 @@ func uploadFiles(m manaba, username, password, url string, filePaths []string) e
 		return err
 	}
 
-	// Cookie ジャーを用意してログイン
+	// manabaにファイルをアップロードするために, manabaにログインをする
 	jar, err := cookiejar.New(nil)
 	if err != nil {
 		return fmt.Errorf("Cookie ジャーの作成に失敗しました: %v", err)

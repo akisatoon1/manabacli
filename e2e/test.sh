@@ -12,4 +12,4 @@ fi
 
 ../build.sh
 url="$1"
-../dist/manabacli "$url" file1.txt file2.txt
+../dist/manabacli upload "$url" file1.txt file2.txt
