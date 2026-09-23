@@ -10,6 +10,6 @@ if [[ $# -ne 1 ]]; then
     exit 1
 fi
 
-../build.sh
+../../build.sh
 url="$1"
-../dist/manabacli upload "$url" file1.txt file2.txt
+../../dist/manabacli upload "$url" file1.txt file2.txt
