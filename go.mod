@@ -3,12 +3,12 @@ module manabacli
 go 1.24.3
 
 require (
+	github.com/PuerkitoBio/goquery v1.9.2
 	github.com/akisatoon1/manaba v0.0.0-20240711160436-d8b7b4081792
 	github.com/stretchr/testify v1.11.1
 )
 
 require (
-	github.com/PuerkitoBio/goquery v1.9.2 // indirect
 	github.com/andybalholm/cascadia v1.3.2 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
