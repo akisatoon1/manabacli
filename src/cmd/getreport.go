@@ -5,35 +5,49 @@ package cmd
 
 import (
 	"fmt"
+	"net/http/cookiejar"
+
+	"manabacli/src/config"
+	"manabacli/src/logic"
+	"manabacli/src/manabaclient"
 
 	"github.com/spf13/cobra"
 )
 
-// getreportCmd represents the getreport command
 var getreportCmd = &cobra.Command{
-	Use:   "getreport",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Use:   "getreport <URL>",
+	Short: "<URL>にはコースのレポートページのURLを指定してください. レポートの名前と提出先URLの一覧を取得します.",
+	Args:  cobra.ExactArgs(1),
+	RunE: func(cmd *cobra.Command, args []string) error {
+		username, password, err := config.Load()
+		if err != nil {
+			return err
+		}
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("getreport called")
+		jar, err := cookiejar.New(nil)
+		if err != nil {
+			return err
+		}
+
+		client := manabaclient.Client{}
+		err = client.Login(jar, username, password)
+		if err != nil {
+			return err
+		}
+
+		url := args[0]
+		reportNameToUrl, err := logic.GetReportNameToUrl(jar, url)
+		if err != nil {
+			return err
+		}
+
+		for name, url := range reportNameToUrl {
+			fmt.Printf("%s -> %s\n", name, url)
+		}
+		return nil
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(getreportCmd)
-
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// getreportCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// getreportCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }

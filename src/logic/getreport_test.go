@@ -1,6 +1,6 @@
 //go:build functional
 
-package main
+package logic
 
 import (
 	"manabacli/src/manabaclient"
