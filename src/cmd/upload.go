@@ -44,16 +44,27 @@ func uploadFiles(m manaba, username, password, url string, filePaths []string) e
 		return err
 	}
 
-	// manabaにファイルをアップロードするために, manabaにログインをする
+	jar, err := login(m, username, password)
+	if err != nil {
+		return err
+	}
+	return uploadAll(m, jar, url, filePaths)
+}
+
+// manabaにファイルをアップロードするために, manabaにログインをする
+func login(m manaba, username, password string) (*cookiejar.Jar, error) {
 	jar, err := cookiejar.New(nil)
 	if err != nil {
-		return fmt.Errorf("Cookie ジャーの作成に失敗しました: %v", err)
+		return nil, fmt.Errorf("Cookie ジャーの作成に失敗しました: %v", err)
 	}
 	if err := m.Login(jar, username, password); err != nil {
-		return fmt.Errorf("ログインに失敗しました: %v", err)
+		return nil, fmt.Errorf("ログインに失敗しました: %v", err)
 	}
+	return jar, nil
+}
 
-	// ファイルを順番にアップロード
+// ファイルを順番にアップロード
+func uploadAll(m manaba, jar *cookiejar.Jar, url string, filePaths []string) error {
 	for _, filePath := range filePaths {
 		if err := m.UploadFile(jar, url, filePath); err != nil {
 			return fmt.Errorf("アップロードに失敗しました (%s): %v", filePath, err)
