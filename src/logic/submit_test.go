@@ -17,7 +17,7 @@ func TestSubmitReport(t *testing.T) {
 	}
 
 	// TODO: 提出先のレポートページ URL を設定する
-	reportUrl := ""
+	reportUrl := "https://room.chuo-u.ac.jp/ct/course_6345179_report_6844361"
 	if reportUrl == "" {
 		t.Skip("reportUrl is not set")
 	}
