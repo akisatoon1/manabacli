@@ -16,7 +16,6 @@ func TestSubmitReport(t *testing.T) {
 		t.Fatal("MANABA_USERNAME or MANABA_PASSWORD environment variable is not set")
 	}
 
-	// TODO: 提出先のレポートページ URL を設定する
 	reportUrl := "https://room.chuo-u.ac.jp/ct/course_6345179_report_6844361"
 	if reportUrl == "" {
 		t.Skip("reportUrl is not set")
