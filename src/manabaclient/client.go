@@ -21,3 +21,7 @@ func (c Client) Login(jar *cookiejar.Jar, username string, password string) erro
 func (c Client) UploadFile(jar *cookiejar.Jar, url string, filePath string) error {
 	return manaba.UploadFile(jar, url, filePath)
 }
+
+func (c Client) DeleteAllFiles(jar *cookiejar.Jar, url string) error {
+	return manaba.DeleteAllFiles(jar, url)
+}
