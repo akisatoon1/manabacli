@@ -12,6 +12,7 @@
 | `upload` | ファイルを manaba のレポート提出ページにアップロードします |
 | `submit` | 既存のアップロード済みファイルを削除し、指定ファイルをアップロードして提出します |
 | `getreport` | コースのレポートページから、レポート名と提出先 URL の一覧を取得します |
+| `getnotsubmit` | 未提出課題の一覧を、タイプ・タイトル・提出先 URL の形式で取得します |
 
 ### upload — ファイルをアップロードする
 
@@ -73,6 +74,23 @@ manabacli getreport <URL>
 
 ```
 manabacli getreport https://manaba.example.ac.jp/ct/course_xxxx_report
+```
+
+### getnotsubmit — 未提出課題の一覧を取得する
+
+manaba の未提出課題一覧ページから、全コースの未提出課題を `[タイプ] タイトル -> URL` の形式で出力します。
+引数はありません。受付終了済みの課題も、manaba の一覧に表示されていればそのまま出力します。
+未提出の課題が無い場合は `未提出の課題はありません` と表示します。
+
+```
+manabacli getnotsubmit
+```
+
+出力例:
+
+```
+[レポート] レポート課題１ -> https://manaba.example.ac.jp/ct/course_xxxx_report_yyyy
+[アンケート] 授業アンケート -> https://manaba.example.ac.jp/ct/course_xxxx_survey_yyyy
 ```
 
 ## 認証情報の設定
